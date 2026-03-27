@@ -121,11 +121,58 @@ function displayDailyStats() {
   dailyStatsModal.classList.remove('hidden');
 }
 
-// Default sample products - empty array (inventory starts clean)
-const defaultProducts = [];
+// Default sample products - for local testing
+const defaultProducts = [
+  { name: "Coca Cola", price: 25, stock: 50, category: "Drinks", history: [50] },
+  { name: "Royal Cola", price: 25, stock: 45, category: "Drinks", history: [45] },
+  { name: "Sprite", price: 25, stock: 40, category: "Drinks", history: [40] },
+  { name: "Minute Maid", price: 30, stock: 35, category: "Drinks", history: [35] },
+  { name: "Water Bottle", price: 15, stock: 60, category: "Drinks", history: [60] },
+  { name: "Ligo Sardines", price: 35, stock: 25, category: "Canned Goods", history: [25] },
+  { name: "San Marino Tuna", price: 45, stock: 20, category: "Canned Goods", history: [20] },
+  { name: "Century Tuna", price: 50, stock: 18, category: "Canned Goods", history: [18] },
+  { name: "Lucky Me Noodles", price: 12, stock: 80, category: "Noodles", history: [80] },
+  { name: "Mangkok Noodles", price: 14, stock: 65, category: "Noodles", history: [65] },
+  { name: "Piattos", price: 18, stock: 40, category: "Snacks", history: [40] },
+  { name: "Chippy", price: 15, category: "Snacks", stock: 55, history: [55] },
+  { name: "Oreo", price: 35, stock: 30, category: "Snacks", history: [30] },
+  { name: "Rebo", price: 12, stock: 45, category: "Snacks", history: [45] },
+  { name: "Cloud 9", price: 10, stock: 70, category: "Snacks", history: [70] },
+  { name: "Knorr Sinigang", price: 8, stock: 90, category: "Condiments", history: [90] },
+  { name: "Milo", price: 45, stock: 25, category: "Drinks", history: [25] },
+  { name: "Nido Milk", price: 180, stock: 15, category: "Drinks", history: [15] },
+  { name: "Prince Pancit Canton", price: 15, stock: 50, category: "Noodles", history: [50] },
+  { name: "Monaco", price: 10, stock: 60, category: "Snacks", history: [60] },
+  { name: "Fudgee Barr", price: 8, stock: 75, category: "Snacks", history: [75] },
+  { name: "C2 Green", price: 22, stock: 30, category: "Drinks", history: [30] },
+  { name: "Sting", price: 18, stock: 40, category: "Drinks", history: [40] },
+  { name: "Tide Powder", price: 120, stock: 10, category: "Cleaning", history: [10] },
+  { name: "Joy Dishwashing", price: 35, stock: 20, category: "Cleaning", history: [20] },
+  { name: "Surf Powder", price: 45, stock: 15, category: "Cleaning", history: [15] },
+  { name: "Silka Papaya", price: 85, stock: 12, category: "Personal Care", history: [12] },
+  { name: "Cecure", price: 55, stock: 18, category: "Personal Care", history: [18] },
+  { name: "Palmolive", price: 65, stock: 22, category: "Personal Care", history: [22] },
+  { name: "Head & Shoulders", price: 150, stock: 8, category: "Personal Care", history: [8] },
+  { name: "Datu Puti Vinegar", price: 18, stock: 35, category: "Condiments", history: [35] },
+  { name: "Silver Swan Soy Sauce", price: 25, stock: 30, category: "Condiments", history: [30] },
+  { name: "Mang Tomas", price: 30, stock: 25, category: "Condiments", history: [25] },
+  { name: "Star Margarine", price: 45, stock: 20, category: "Breads & Bakery", history: [20] },
+  { name: "Patchi Bread", price: 18, stock: 40, category: "Breads & Bakery", history: [40] },
+  { name: "Gardenia White", price: 55, stock: 15, category: "Breads & Bakery", history: [15] },
+  { name: "Heritage Loaf", price: 48, stock: 18, category: "Breads & Bakery", history: [18] },
+  { name: "Premium Rice 5kg", price: 280, stock: 10, category: "Rice & Grains", history: [10] },
+  { name: "Sinandomeng Rice 5kg", price: 250, stock: 12, category: "Rice & Grains", history: [12] },
+  { name: "Red Rice 5kg", price: 300, stock: 8, category: "Rice & Grains", history: [8] }
+];
 
 // Store products in an array (and sync with localStorage)
-let products = JSON.parse(localStorage.getItem('products')) || defaultProducts;
+let products = JSON.parse(localStorage.getItem('products'));
+
+// Load default sample products only if no data exists in localStorage
+if (!products || products.length === 0) {
+  products = [...defaultProducts];
+  localStorage.setItem('products', JSON.stringify(products));
+}
 
 // Sort state tracking
 let priceSortAscending = true;

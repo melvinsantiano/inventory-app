@@ -647,3 +647,65 @@ body.dark-theme .stat-profit {
 body.dark-theme .transaction-item {
   border-color: #444;
 }
+
+/* Category Badge */
+.category-badge {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: bold;
+  background: #e9ecef;
+  color: #495057;
+}
+
+/* Category Filter Dropdown */
+#categoryFilter {
+  padding: 12px 16px;
+  font-size: 16px;
+  border: 2px solid #ccc;
+  border-radius: 6px;
+  background: white;
+  cursor: pointer;
+  min-width: 150px;
+}
+
+#categoryFilter:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* Category dropdown dark theme */
+body.dark-theme #categoryFilter {
+  background: #333;
+  border-color: #555;
+  color: #f0f0f0;
+}
+
+/* Add Product Form - Category Select */
+#addProductForm select {
+  padding: 14px;
+  font-size: 18px;
+  border: 2px solid #ccc;
+  border-radius: 6px;
+  margin-right: 10px;
+  background: white;
+  cursor: pointer;
+}
+
+#addProductForm select:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+body.dark-theme #addProductForm select {
+  background: #333;
+  border-color: #555;
+  color: #f0f0f0;
+}
+
+/* Table category column */
+#inventoryTable th:nth-child(2),
+#inventoryTable td:nth-child(2) {
+  text-align: center;
+}

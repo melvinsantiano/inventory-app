@@ -29,6 +29,19 @@
       <input type="text" id="itemName" placeholder="Item Name" required>
       <input type="number" id="itemPrice" placeholder="Price (₱)" min="1" required>
       <input type="number" id="itemStock" placeholder="Initial Stock" min="0" required>
+      <select id="itemCategory" required>
+        <option value="">Select Category</option>
+        <option value="Drinks">Drinks</option>
+        <option value="Snacks">Snacks</option>
+        <option value="Noodles">Noodles</option>
+        <option value="Canned Goods">Canned Goods</option>
+        <option value="Condiments">Condiments</option>
+        <option value="Rice & Grains">Rice & Grains</option>
+        <option value="Breads & Bakery">Breads & Bakery</option>
+        <option value="Personal Care">Personal Care</option>
+        <option value="Cleaning">Cleaning</option>
+        <option value="Others">Others</option>
+      </select>
       <button type="submit" class="primary">Add Product</button>
     </form>
     <div id="totalValue" class="total-display"><strong>Total Value: ₱0</strong></div>
@@ -41,6 +54,7 @@
       <thead>
         <tr>
           <th>Item</th>
+          <th>Category</th>
           <th>Price</th>
           <th>Stock</th>
           <th>Actions</th>
@@ -56,6 +70,9 @@
   <!-- Search Bar -->
   <section id="searchSection">
     <input type="text" id="searchInput" placeholder="🔍 Search products...">
+    <select id="categoryFilter">
+      <option value="">All Categories</option>
+    </select>
     <button id="clearSearch" class="danger" style="display:none;">✕ Clear</button>
   </section>
 

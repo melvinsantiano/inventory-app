@@ -5,6 +5,7 @@ const totalValueDisplay = document.getElementById('totalValue');
 const sortPriceBtn = document.getElementById('sortPrice');
 const resetBtn = document.getElementById('resetInventory');
 const fab = document.getElementById('fab');
+const categoryFilter = document.getElementById('categoryFilter');
 
 // Hamburger menu elements
 const menuBtn = document.getElementById('menuBtn');
@@ -151,6 +152,7 @@ function renderTable() {
 
     row.innerHTML = `
       <td>${capitalize(product.name)}</td>
+      <td><span class="category-badge">${product.category}</span></td>
       <td>₱${product.price}</td>
       <td>${product.stock > 0 ? product.stock : "Out of Stock"}</td>
       <td>
@@ -187,9 +189,10 @@ addProductForm.addEventListener('submit', function(e) {
   const name = capitalize(document.getElementById('itemName').value.trim());
   const price = parseFloat(document.getElementById('itemPrice').value);
   const stock = parseInt(document.getElementById('itemStock').value);
+  const category = document.getElementById('itemCategory').value;
 
-  if (!name || price <= 0 || stock < 0) {
-    alert("Please enter valid product details.");
+  if (!name || price <= 0 || stock < 0 || !category) {
+    alert("Please enter valid product details including a category.");
     return;
   }  
   // Check if product already exists (same name + price)
@@ -199,12 +202,13 @@ addProductForm.addEventListener('submit', function(e) {
     existingProduct.history.push(existingProduct.stock);
     recordTransaction('restock', name, price, stock);
   } else {
-    const newProduct = { name, price, stock, history: [stock] };
+    const newProduct = { name, price, stock, category, history: [stock] };
     products.push(newProduct);
     recordTransaction('restock', name, price, stock);
   }
 
   localStorage.setItem('products', JSON.stringify(products));
+  updateCategoryFilter();
   renderTable();
   addProductForm.reset();
 });
@@ -289,6 +293,7 @@ function createSortNameButton() {
 document.addEventListener('DOMContentLoaded', () => {
   createSortNameButton();
   createSortStockButton();
+  updateCategoryFilter();
   
   // Menu search functionality
   const menuSearchInput = document.getElementById('menuSearchInput');
@@ -361,14 +366,20 @@ dailyStatsModal.addEventListener('click', (e) => {
 const searchInput = document.getElementById('searchInput');
 const clearSearchBtn = document.getElementById('clearSearch');
 
-searchInput.addEventListener('input', (e) => {
-  const searchTerm = e.target.value.toLowerCase();
+function filterProducts() {
+  const searchTerm = searchInput.value.toLowerCase();
+  const selectedCategory = categoryFilter.value;
   const rows = inventoryTableBody.querySelectorAll('tr');
   
   let hasResults = false;
   rows.forEach(row => {
     const itemName = row.cells[0].textContent.toLowerCase();
-    if (itemName.includes(searchTerm)) {
+    const itemCategory = row.cells[1].textContent;
+    
+    const matchesSearch = itemName.includes(searchTerm);
+    const matchesCategory = selectedCategory === '' || itemCategory === selectedCategory;
+    
+    if (matchesSearch && matchesCategory) {
       row.style.display = '';
       hasResults = true;
     } else {
@@ -377,15 +388,33 @@ searchInput.addEventListener('input', (e) => {
   });
   
   // Show/hide clear button
-  if (searchTerm.length > 0) {
+  if (searchTerm.length > 0 || selectedCategory !== '') {
     clearSearchBtn.style.display = 'inline-block';
   } else {
     clearSearchBtn.style.display = 'none';
   }
-});
+}
+
+searchInput.addEventListener('input', filterProducts);
+
+// Category filter functionality
+categoryFilter.addEventListener('change', filterProducts);
+
+// Update category filter dropdown with unique categories from products
+function updateCategoryFilter() {
+  const categories = [...new Set(products.map(p => p.category))].sort();
+  categoryFilter.innerHTML = '<option value="">All Categories</option>';
+  categories.forEach(cat => {
+    const option = document.createElement('option');
+    option.value = cat;
+    option.textContent = cat;
+    categoryFilter.appendChild(option);
+  });
+}
 
 clearSearchBtn.addEventListener('click', () => {
   searchInput.value = '';
+  categoryFilter.value = '';
   clearSearchBtn.style.display = 'none';
   renderTable(); // Re-render to show all
 });

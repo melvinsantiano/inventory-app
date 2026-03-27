@@ -26,6 +26,9 @@ const confirmModal = document.getElementById('confirmModal');
 const confirmYes = document.getElementById('confirmYes');
 const confirmNo = document.getElementById('confirmNo');
 const instructionsModal = document.getElementById('instructionsModal');
+
+// Track pending delete action (null = no pending action, number = item index to delete)
+let pendingDeleteIndex = null;
 const closeInstructions = document.getElementById('closeInstructions');
 const dailyStatsModal = document.getElementById('dailyStatsModal');
 const showDailyStatsBtn = document.getElementById('showDailyStats');
@@ -291,11 +294,17 @@ function sale(index) {
   }
 }
 
-// Delete function
+// Delete function - shows confirmation dialog
 function deleteItem(index) {
-  products.splice(index, 1); // remove item
-  localStorage.setItem('products', JSON.stringify(products));
-  renderTable();
+  console.log('deleteItem called with index:', index);
+  pendingDeleteIndex = index;
+  const productName = products[index].name;
+  // Update modal message for single item delete
+  document.querySelector('#confirmModal p').textContent = 
+    `Are you sure you want to delete "${productName}"?`;
+  document.getElementById('confirmYes').textContent = 'Yes, Delete';
+  confirmModal.classList.remove('hidden');
+  console.log('Modal should be visible now');
 }
 
 // Sort by Price (toggle ascending/descending)
@@ -388,16 +397,30 @@ resetBtn.addEventListener('click', () => {
     alert("No items listed to remove.");
     return;
   }
+  pendingDeleteIndex = null; // null indicates full reset, not single delete
+  document.querySelector('#confirmModal p').textContent = 
+    'Are you sure you want to clear all inventory?';
+  document.getElementById('confirmYes').textContent = 'Yes, Reset';
   confirmModal.classList.remove('hidden');
 });
 
 confirmYes.addEventListener('click', () => {
-  products = [];
-  localStorage.setItem('products', JSON.stringify(products));
-  localStorage.setItem('isInitialized', 'true'); // Mark as initialized so sample data won't reload
-  updateCategoryFilter();
-  renderTable();
-  confirmModal.classList.add('hidden');
+  if (pendingDeleteIndex !== null) {
+    // Single item delete
+    products.splice(pendingDeleteIndex, 1);
+    localStorage.setItem('products', JSON.stringify(products));
+    renderTable();
+    pendingDeleteIndex = null;
+    confirmModal.classList.add('hidden');
+  } else {
+    // Full reset
+    products = [];
+    localStorage.setItem('products', JSON.stringify(products));
+    localStorage.setItem('isInitialized', 'true'); // Mark as initialized so sample data won't reload
+    updateCategoryFilter();
+    renderTable();
+    confirmModal.classList.add('hidden');
+  }
 });
 
 // Click outside confirmation modal to close
@@ -480,6 +503,7 @@ clearSearchBtn.addEventListener('click', () => {
 });
 
 confirmNo.addEventListener('click', () => {
+  pendingDeleteIndex = null;
   confirmModal.classList.add('hidden');
 });
 

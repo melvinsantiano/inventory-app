@@ -227,6 +227,9 @@ function renderTable() {
   });
 
   totalValueDisplay.textContent = `Total Value: ₱${totalValue}`;
+  
+  // Re-apply filters after render
+  filterProducts();
 }
 
 // Add product form handler
@@ -476,6 +479,12 @@ fab.addEventListener('click', () => {
   setTimeout(() => {
     document.getElementById('itemName').focus();
   }, 500);
+});
+
+// Scroll to Bottom Button
+const scrollBottomBtn = document.getElementById('scrollBottom');
+scrollBottomBtn.addEventListener('click', () => {
+  window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
 });
 
 // Hamburger menu toggle

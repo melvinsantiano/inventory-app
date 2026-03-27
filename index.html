@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Sari-Sari Store Inventory</title>
+  <title>Sari-saring Bukid Inventory</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -30,7 +30,6 @@
       <input type="number" id="itemPrice" placeholder="Price (₱)" min="1" required>
       <input type="number" id="itemStock" placeholder="Initial Stock" min="0" required>
       <select id="itemCategory" required>
-        <option value="">Select Category</option>
         <option value="Drinks">Drinks</option>
         <option value="Snacks">Snacks</option>
         <option value="Noodles">Noodles</option>
@@ -82,8 +81,9 @@
     <button id="resetInventory" class="danger">Reset Inventory</button>
   </section>
 
-  <!-- Floating Action Button -->
+  <!-- Floating Action Buttons -->
   <button id="fab" title="Quick Add">+</button>
+  <button id="scrollBottom" title="Scroll to Bottom">↓</button>
 
   <!-- Confirmation Modal -->
   <div id="confirmModal" class="modal hidden">

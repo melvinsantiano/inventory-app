@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sari-Sari Store Inventory</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <img src="mds-logo.png" alt="MDS Logo" id="logo" style="cursor: pointer;" title="Click to scroll to top">
+    <h1>Sari-Sari Store Inventory</h1>
+    <!-- Hamburger Menu -->
+    <nav id="hamburgerMenu">
+      <button id="menuBtn">☰</button>
+      <div id="menuDropdown" class="hidden">
+        <input type="text" id="menuSearchInput" placeholder="🔍 Quick Search..." style="padding: 10px; font-size: 16px; border: none; border-radius: 4px; width: 200px;">
+        <button id="showDailyStats">📊 Daily Sales</button>
+        <button id="themeToggle">🌗 Toggle Theme</button>
+        <button id="showInstructions">❓ Instructions</button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Add Product Form -->
+  <section id="productSection">
+    <h2>Add New Product</h2>
+    <form id="addProductForm">
+      <input type="text" id="itemName" placeholder="Item Name" required>
+      <input type="number" id="itemPrice" placeholder="Price (₱)" min="1" required>
+      <input type="number" id="itemStock" placeholder="Initial Stock" min="0" required>
+      <button type="submit" class="primary">Add Product</button>
+    </form>
+    <div id="totalValue" class="total-display"><strong>Total Value: ₱0</strong></div>
+  </section>
+
+  <!-- Inventory Table -->
+  <section id="inventorySection">
+    <h2>Current Inventory</h2>
+    <table id="inventoryTable">
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Price</th>
+          <th>Stock</th>
+          <th>Actions</th>
+          <th>Trend</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Rows will be added dynamically -->
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Search Bar -->
+  <section id="searchSection">
+    <input type="text" id="searchInput" placeholder="🔍 Search products...">
+    <button id="clearSearch" class="danger" style="display:none;">✕ Clear</button>
+  </section>
+
+  <!-- Controls -->
+  <section id="controls">
+    <button id="sortPrice">Sort by Price ↑</button>
+    <button id="resetInventory" class="danger">Reset Inventory</button>
+  </section>
+
+  <!-- Floating Action Button -->
+  <button id="fab" title="Quick Add">+</button>
+
+  <!-- Confirmation Modal -->
+  <div id="confirmModal" class="modal hidden">
+    <div class="modal-content">
+      <p>Are you sure you want to clear all inventory?</p>
+      <button id="confirmYes" class="danger">Yes, Reset</button>
+      <button id="confirmNo">Cancel</button>
+    </div>
+  </div>
+
+  <!-- Daily Stats Modal -->
+  <div id="dailyStatsModal" class="modal hidden">
+    <div class="modal-content daily-stats-content">
+      <h2>📊 Daily Sales Report</h2>
+      <div id="dailyStatsDate"></div>
+      <div id="dailyStatsSummary">
+        <div class="stat-card stat-sales">
+          <div class="stat-icon">💰</div>
+          <div class="stat-label">Total Sales</div>
+          <div class="stat-value" id="totalSalesCount">0</div>
+        </div>
+        <div class="stat-card stat-revenue">
+          <div class="stat-icon">₱</div>
+          <div class="stat-label">Revenue</div>
+          <div class="stat-value" id="totalRevenue">₱0</div>
+        </div>
+        <div class="stat-card stat-restock">
+          <div class="stat-icon">📦</div>
+          <div class="stat-label">Restocks</div>
+          <div class="stat-value" id="totalRestocks">0</div>
+        </div>
+        <div class="stat-card stat-profit">
+          <div class="stat-icon">📈</div>
+          <div class="stat-label">Net Profit</div>
+          <div class="stat-value" id="netProfit">₱0</div>
+        </div>
+      </div>
+      <div id="dailyStatsDetails">
+        <h3>📋 Transaction History</h3>
+        <div id="transactionList"></div>
+      </div>
+      <button id="closeDailyStats" class="close-btn">Close</button>
+    </div>
+  </div>
+
+  <!-- Instructions Modal -->
+  <div id="instructionsModal" class="modal hidden">
+    <div class="modal-content instructions-content">
+      <h2>📖 How to Use</h2>
+      
+      <div class="instruction-group">
+        <h3>📝 Adding Products</h3>
+        <ul>
+          <li>Fill in Item Name, Price, and Initial Stock</li>
+          <li>Click <strong>Add Product</strong> to save</li>
+          <li>Adding existing product increases its stock</li>
+        </ul>
+      </div>
+      
+      <div class="instruction-group">
+        <h3>🔄 Managing Stock</h3>
+        <ul>
+          <li>Click <strong>+</strong> to restock</li>
+          <li>Click <strong>-</strong> to record a sale</li>
+          <li>⚠️ Items with stock below 5 will flash red (low stock warning)</li>
+        </ul>
+      </div>
+      
+      <div class="instruction-group">
+        <h3>🔍 Finding Products</h3>
+        <ul>
+          <li>Use the search bar at the top</li>
+          <li>Also available in the hamburger menu ☰</li>
+        </ul>
+      </div>
+      
+      <div class="instruction-group">
+        <h3>🔄 Sorting</h3>
+        <ul>
+          <li><strong>Sort by Price</strong> - toggles ↑↓</li>
+          <li><strong>Sort by Stock</strong> - toggles ↑↓</li>
+          <li><strong>Sort by Name</strong> - toggles A↔Z</li>
+        </ul>
+      </div>
+      
+      <div class="instruction-group">
+        <h3>📈 Trends</h3>
+        <ul>
+          <li>📈 +X% = Stock increased</li>
+          <li>📉 -X% = Stock decreased</li>
+          <li>➖ 0% = No change</li>
+        </ul>
+      </div>
+      
+      <div class="instruction-group">
+        <h3>🗑️ Deleting</h3>
+        <ul>
+          <li>Use trash icon to delete individual items</li>
+          <li>Click <strong>Reset Inventory</strong> to clear everything</li>
+        </ul>
+      </div>
+      
+      <div class="instruction-group">
+        <h3>📊 Daily Sales (New!)</h3>
+        <ul>
+          <li>Click <strong>☰ → Daily Sales</strong> to view today's stats</li>
+          <li>See total sales, revenue, restocks, and profit</li>
+          <li>Transaction history with timestamps</li>
+          <li>Data resets daily at midnight</li>
+        </ul>
+      </div>
+      
+      <button id="closeInstructions">Got it! ✓</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

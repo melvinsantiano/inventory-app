@@ -1,0 +1,649 @@
+/* Header layout */
+header {
+  display: flex;
+  align-items: center;
+  background: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 6px;
+
+  position: sticky;
+  top: 0;
+  z-index: 2000;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+/* Logo */
+#logo {
+  height: 110px;        /* bigger logo */
+  margin-right: 20px;  /* spacing from title */
+  border-radius: 6px;
+}
+
+/* Title */
+header h1 {
+  font-size: 40px;
+  font-weight: bold;
+  color: white;
+  margin: 0;
+  flex-grow: 1;
+  text-align: center;  /* keep centered */
+}
+
+/* Body */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 20px;
+  line-height: 1.6;
+  background: #ffffff;
+  color: #000000;
+  transition: background 0.3s, color 0.3s;
+}
+
+/* Dark theme */
+body.dark-theme {
+  background: #121212;
+  color: #f0f0f0;
+}
+
+body.dark-theme header {
+  background: #222;
+  color: #f0f0f0;
+}
+
+body.dark-theme table, 
+body.dark-theme th, 
+body.dark-theme td {
+  border-color: #888;
+}
+
+body.dark-theme th {
+  background: #333;
+}
+
+/* Hamburger Menu */
+#hamburgerMenu {
+  position: relative;
+}
+
+#menuBtn {
+  font-size: 28px; /* bigger hamburger icon */
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: inherit;
+}
+
+#menuDropdown {
+  position: absolute;
+  right: 0;
+  top: 40px;
+  background: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  z-index: 1000;
+  animation: slideDown 0.3s ease; /* smooth dropdown animation */
+}
+
+#menuDropdown.hidden {
+  display: none;
+}
+
+#menuDropdown button {
+  margin: 5px 0;
+  padding: 14px;              /* bigger padding */
+  font-size: 22px;            /* larger icon size */
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#menuDropdown button:hover {
+  background: #0056b3;
+}
+
+/* Dark theme for dropdown */
+body.dark-theme #menuDropdown {
+  background: #333;
+  border-color: #555;
+}
+
+body.dark-theme #menuDropdown button {
+  background: #444;
+  color: #f0f0f0;
+}
+
+body.dark-theme #menuDropdown button:hover {
+  background: #666;
+}
+
+/* Dropdown animation */
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Total value display */
+.total-display {
+  margin-top: 15px;
+  font-size: 20px;
+  color: #28a745;
+  font-weight: bold;
+  padding: 10px 20px;
+  background: #d4edda;
+  border-radius: 6px;
+  display: inline-block;
+}
+
+body.dark-theme .total-display {
+  background: #1e3a1e;
+  color: #5cb85c;
+}
+
+/* Dropdown search styling */
+#menuDropdown input {
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+/* Add Product Form */
+#addProductForm input {
+  padding: 14px;
+  font-size: 18px; /* bigger input text */
+  margin-right: 10px;
+}
+
+#addProductForm button {
+  padding: 14px 24px;
+  font-size: 18px;
+}
+
+/* Search Section */
+#searchSection {
+  margin-bottom: 20px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+#searchInput {
+  flex: 1;
+  padding: 12px 16px;
+  font-size: 16px;
+  border: 2px solid #ccc;
+  border-radius: 6px;
+  max-width: 400px;
+}
+
+#searchInput:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+#clearSearch {
+  padding: 12px 16px;
+  font-size: 14px;
+}
+
+/* Dark theme search */
+body.dark-theme #searchInput {
+  background: #333;
+  border-color: #555;
+  color: #f0f0f0;
+}
+
+body.dark-theme #searchInput:focus {
+  border-color: #007bff;
+}
+
+/* Sections */
+section {
+  margin-bottom: 30px;
+}
+
+/* Table styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 18px; /* bigger listing */
+  table-layout: fixed; /* prevent columns from shifting */
+}
+
+th, td {
+  padding: 14px;
+  border: 1px solid #ccc;
+  text-align: center;
+  overflow: hidden; /* prevent overflow */
+  text-overflow: ellipsis;
+}
+
+/* Sticky table header */
+thead th {
+  position: sticky;
+  top: 0;
+  background: #f0f0f0;
+  z-index: 100; /* keep above rows */
+}
+
+/* Trend column */
+td canvas {
+  display: block;
+  margin: 0 auto;
+  max-width: 100px;   /* fixed width for sparkline */
+  height: 30px;       /* fixed height */
+}
+
+/* Trend cell container */
+.trend-cell {
+  margin-top: 4px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+/* Trend indicator styling */
+.trend-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.trend-up {
+  color: #28a745;
+  background-color: #d4edda;
+}
+
+.trend-down {
+  color: #dc3545;
+  background-color: #f8d7da;
+}
+
+.trend-stable {
+  color: #6c757d;
+  background-color: #e9ecef;
+}
+
+/* Dark theme trend colors */
+body.dark-theme .trend-up {
+  color: #5cb85c;
+  background-color: #1e3a1e;
+}
+
+body.dark-theme .trend-down {
+  color: #ff6b6b;
+  background-color: #3a1e1e;
+}
+
+body.dark-theme .trend-stable {
+  color: #adb5bd;
+  background-color: #2d2d2d;
+}
+
+
+.warning {
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% { background-color: #ffcccc; }
+  50% { background-color: #ff9999; }
+  100% { background-color: #ffcccc; }
+}
+
+/* Buttons */
+button {
+  padding: 8px 14px;
+  margin: 2px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+button.primary {
+  background: #007bff;
+  color: white;
+}
+
+button.restock {
+  background: green;
+  color: white;
+}
+
+button.sale {
+  background: orange;
+  color: white;
+}
+
+button.danger {
+  background: red;
+  color: white;
+}
+
+/* Floating Action Button */
+#fab {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 55px;
+  height: 55px;
+  font-size: 26px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+
+/* Controls */
+#controls {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+#totalValue {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+/* Modal styling */
+.modal.hidden {
+  display: none;
+}
+
+.modal {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 6px;
+  text-align: center;
+  max-width: 400px;
+}
+
+body.dark-theme .modal-content {
+  background: #333;
+  color: #f0f0f0;
+}
+
+/* Instruction Modal Styling */
+.instruction-list {
+  text-align: left;
+  margin: 20px 0;
+  padding-left: 20px;
+  font-size: 16px;
+  line-height: 1.8;
+  list-style: none; /* remove default bullets */
+}
+
+.instruction-list li {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px; /* space between icon and text */
+}
+
+/* Better instruction styling */
+.instructions-content {
+  max-width: 500px;
+  max-height: 80vh;
+  overflow-y: auto;
+  text-align: left;
+}
+
+.instructions-content h2 {
+  text-align: center;
+  color: #007bff;
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+.instruction-group {
+  margin-bottom: 20px;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border-left: 4px solid #007bff;
+}
+
+.instruction-group h3 {
+  margin: 0 0 10px 0;
+  color: #333;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.instruction-group ul {
+  margin: 0;
+  padding-left: 20px;
+  list-style: disc;
+}
+
+.instruction-group li {
+  margin-bottom: 6px;
+  font-size: 14px;
+  color: #555;
+}
+
+#closeInstructions {
+  width: 100%;
+  padding: 14px;
+  font-size: 18px;
+  background: #28a745;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+#closeInstructions:hover {
+  background: #218838;
+}
+
+/* Dark theme instructions */
+body.dark-theme .instruction-group {
+  background: #2d2d2d;
+}
+
+body.dark-theme .instruction-group h3 {
+  color: #f0f0f0;
+}
+
+body.dark-theme .instruction-group li {
+  color: #ccc;
+}
+
+/* Daily Stats Modal */
+.daily-stats-content {
+  max-width: 500px;
+  max-height: 85vh;
+  overflow-y: auto;
+  text-align: center;
+}
+
+.daily-stats-content h2 {
+  color: #007bff;
+  margin-bottom: 10px;
+}
+
+#dailyStatsDate {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+#dailyStatsSummary {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.stat-card {
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
+  border: 2px solid transparent;
+}
+
+.stat-icon {
+  font-size: 24px;
+  margin-bottom: 5px;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 5px;
+}
+
+.stat-value {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.stat-sales {
+  background: #fff3cd;
+  border-color: #ffc107;
+}
+
+.stat-sales .stat-value {
+  color: #856404;
+}
+
+.stat-revenue {
+  background: #d4edda;
+  border-color: #28a745;
+}
+
+.stat-revenue .stat-value {
+  color: #155724;
+}
+
+.stat-restock {
+  background: #cce5ff;
+  border-color: #007bff;
+}
+
+.stat-restock .stat-value {
+  color: #004085;
+}
+
+.stat-profit {
+  background: #f8d7da;
+  border-color: #dc3545;
+}
+
+.stat-profit .stat-value {
+  color: #721c24;
+}
+
+#dailyStatsDetails {
+  text-align: left;
+  margin-top: 15px;
+}
+
+#dailyStatsDetails h3 {
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+#transactionList {
+  max-height: 200px;
+  overflow-y: auto;
+  font-size: 13px;
+}
+
+.transaction-item {
+  padding: 8px 10px;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.transaction-item:last-child {
+  border-bottom: none;
+}
+
+.transaction-time {
+  font-size: 11px;
+  color: #888;
+}
+
+.transaction-product {
+  flex: 1;
+  margin-left: 10px;
+}
+
+.transaction-sale {
+  color: #dc3545;
+  font-weight: bold;
+}
+
+.transaction-restock {
+  color: #28a745;
+  font-weight: bold;
+}
+
+.close-btn {
+  width: 100%;
+  padding: 12px;
+  margin-top: 15px;
+  background: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.close-btn:hover {
+  background: #5a6268;
+}
+
+/* Dark theme daily stats */
+body.dark-theme .stat-sales {
+  background: #3d3520;
+}
+
+body.dark-theme .stat-revenue {
+  background: #1e3a1e;
+}
+
+body.dark-theme .stat-restock {
+  background: #1e2a3a;
+}
+
+body.dark-theme .stat-profit {
+  background: #3a1e1e;
+}
+
+body.dark-theme .transaction-item {
+  border-color: #444;
+}

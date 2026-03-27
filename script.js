@@ -167,11 +167,19 @@ const defaultProducts = [
 
 // Store products in an array (and sync with localStorage)
 let products = JSON.parse(localStorage.getItem('products'));
+let isInitialized = localStorage.getItem('isInitialized') === 'true';
 
-// Load default sample products only if no data exists in localStorage
+// Load default sample products only if no data exists AND not previously initialized
 if (!products || products.length === 0) {
-  products = [...defaultProducts];
-  localStorage.setItem('products', JSON.stringify(products));
+  if (!isInitialized) {
+    // First time loading - add sample data
+    products = [...defaultProducts];
+    localStorage.setItem('products', JSON.stringify(products));
+    localStorage.setItem('isInitialized', 'true');
+  } else {
+    // User has reset before - start with empty inventory
+    products = [];
+  }
 }
 
 // Sort state tracking
@@ -386,6 +394,8 @@ resetBtn.addEventListener('click', () => {
 confirmYes.addEventListener('click', () => {
   products = [];
   localStorage.setItem('products', JSON.stringify(products));
+  localStorage.setItem('isInitialized', 'true'); // Mark as initialized so sample data won't reload
+  updateCategoryFilter();
   renderTable();
   confirmModal.classList.add('hidden');
 });
